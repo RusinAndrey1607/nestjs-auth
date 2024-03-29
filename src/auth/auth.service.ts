@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, UnauthorizedException } from "@n
 import { JwtService } from "@nestjs/jwt";
 import { UsersService } from "src/users/users.service";
 import { UserRegistrationDto } from "./dto/user-registration.dto";
-import *  as bcrypt from "bcryptjs";
+import * as bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "src/users/users.model";
 
@@ -31,8 +31,7 @@ export class AuthService {
       password: hashPassword,
       activationLink,
     });
-    console.log("Sent email activationLink");
-    // Uncoment after creating mail service
+    // console.log("Sent email activationLink");
     // await mailService.sendMail(email,`${process.env.API_URL}/auth/activate/${activationLink}`)
     return this.generateToken(user);
   }
