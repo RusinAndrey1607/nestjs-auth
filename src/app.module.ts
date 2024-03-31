@@ -9,6 +9,7 @@ import { Role } from "./roles/roles.model";
 import { UserRoles } from "./roles/user-roles.model ";
 import { AuthModule } from './auth/auth.module';
 import { InitializationModule } from './initialization/initialization.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   controllers: [],
@@ -31,6 +32,7 @@ import { InitializationModule } from './initialization/initialization.module';
     RolesModule,
     AuthModule,
     InitializationModule,
+    MailModule,
   ],
   providers: [],
 })
