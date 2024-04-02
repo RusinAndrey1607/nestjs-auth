@@ -5,12 +5,14 @@ import { UserRegistrationDto } from "./dto/user-registration.dto";
 import * as bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "src/users/users.model";
+import { MailService } from "src/mail/mail.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private mailService:MailService
   ) {}
   async login(dto: UserRegistrationDto) {
     const user = await this.validateUser(dto);
@@ -32,7 +34,7 @@ export class AuthService {
       activationLink,
     });
     // console.log("Sent email activationLink");
-    // await mailService.sendMail(email,`${process.env.API_URL}/auth/activate/${activationLink}`)
+    await this.mailService.sendMail(dto.email,"Activate your account",`${process.env.API_URL}/auth/activate/${activationLink}`)
     return this.generateToken(user);
   }
 
