@@ -10,6 +10,7 @@ import { UserRoles } from "./roles/user-roles.model ";
 import { AuthModule } from './auth/auth.module';
 import { InitializationModule } from './initialization/initialization.module';
 import { MailModule } from './mail/mail.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   controllers: [],
@@ -33,6 +34,7 @@ import { MailModule } from './mail/mail.module';
     AuthModule,
     InitializationModule,
     MailModule,
+    FilesModule,
   ],
   providers: [],
 })
