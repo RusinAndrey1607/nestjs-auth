@@ -10,7 +10,7 @@ export class MailService {
             from:process.env.SMTP_USER,
             subject,
             text,
-            html:`<h1>${text}</h1>`,
+            html:`<a href="${text}">${text}</a>`,
         })
         return "hello";
     }

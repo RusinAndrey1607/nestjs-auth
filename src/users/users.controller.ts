@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, UsePipes } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseGuards, UsePipes } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UsersService } from "./users.service";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
@@ -15,6 +15,8 @@ import { ValidationPipe } from "src/pipes/validation.pipe";
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+
+
   @ApiOperation({ summary: "User creation" })
   @ApiResponse({ status: 200, type: User })
   @UsePipes(ValidationPipe)
@@ -30,6 +32,14 @@ export class UsersController {
   @Get()
   getAll() {
     return this.usersService.getAllUsers();
+  }
+
+  @UsePipes() 
+  @ApiOperation({ summary: "Activate user" })
+  @ApiResponse({ status: 200, type:User })
+  @Get("/activate/:link")
+  activate(@Param("link") link:string) {
+    return this.usersService.activate(link);
   }
 
   @Roles("ADMIN")

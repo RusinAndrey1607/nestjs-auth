@@ -34,7 +34,7 @@ export class AuthService {
       activationLink,
     });
     // console.log("Sent email activationLink");
-    await this.mailService.sendMail(dto.email,"Activate your account",`${process.env.API_URL}/auth/activate/${activationLink}`)
+    await this.mailService.sendMail(dto.email,"Activate your account",`${process.env.API_URL}/users/activate/${activationLink}`)
     return this.generateToken(user);
   }
 
@@ -46,6 +46,9 @@ export class AuthService {
   }
   private async validateUser(dto: UserRegistrationDto) {
     const user = await this.userService.getUserByEmail(dto.email);
+    if(!user){
+      throw new HttpException('User not Found', HttpStatus.NOT_FOUND);
+    }
     const passwordEquals = await bcrypt.compare(dto.password, user.password)
     if (user && passwordEquals){
         return user;

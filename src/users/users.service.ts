@@ -12,6 +12,23 @@ export class UsersService {
     @InjectModel(User) private userModel: typeof User,
     private rolesService: RolesService,
   ) {}
+
+  async activate(activationLink: string) {
+    const user = await this.userModel.findOne({
+      where: {
+        activationLink,
+      },
+    });
+    if (!user) {
+      throw new HttpException(
+        'Invalid activation link',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    user.isActivated = true;
+    await user.save();
+    return user;
+  }
   async createUser(dto: CreateUserDto) {
     const user = await this.userModel.create(dto);
     const role = await this.rolesService.getRoleByValue('USER');
@@ -29,8 +46,7 @@ export class UsersService {
       user.roles = [role];
       return user;
     } catch (error) {
-      throw new HttpException("Admin already exists",HttpStatus.BAD_REQUEST)
-
+      throw new HttpException('Admin already exists', HttpStatus.BAD_REQUEST);
     }
   }
   async addRole(dto: AddRoleDto) {
