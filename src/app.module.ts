@@ -11,10 +11,15 @@ import { AuthModule } from './auth/auth.module';
 import { InitializationModule } from './initialization/initialization.module';
 import { MailModule } from './mail/mail.module';
 import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from "@nestjs/serve-static";
+import { join } from "path";
 
 @Module({
   controllers: [],
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, 'static'),
+    }),
     ConfigModule.forRoot({
       envFilePath: [`.${process.env.NODE_ENV}.env`],
     }),

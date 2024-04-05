@@ -3,7 +3,6 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { UsersService } from "./users.service";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { User } from "./users.model";
-import { JwtAuthGuard } from "src/roles/jwt-auth.guard";
 import { Roles } from "src/roles/roles-auth.decorator";
 import { RolesGuard } from "src/roles/roles.guard";
 import { AddRoleDto } from "./dto/add-role.dto";
@@ -14,8 +13,6 @@ import { ValidationPipe } from "src/pipes/validation.pipe";
 @Controller("users")
 export class UsersController {
   constructor(private usersService: UsersService) {}
-
-
 
   @ApiOperation({ summary: "User creation" })
   @ApiResponse({ status: 200, type: User })
